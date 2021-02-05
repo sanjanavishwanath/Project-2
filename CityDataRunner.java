@@ -49,4 +49,51 @@ public class CityDataRunner
         }
         return population;
     }
+    public static String getHighestCityPopulation()
+    {
+        int high = 0;
+        String ret = "";
+        Set<K> keySet = hash.keySet();
+        for(int i = 0; i<keySet.size(); i++)
+        {
+            K k = keySet.get(i);
+            int population = (int)hash.get(k);
+            if(i==0)
+            {
+                 high = population;
+                 ret = k.getCity();
+            }
+            if(high<population)
+            {
+                high = population;
+                ret = k.getCity();
+            }
+        }
+        return ret + ": " + high;
+    }
+    public static String getHighestCityStatePopulation(String state)
+    {
+        int high = 0;
+        String ret = "";
+        Set<K> keySet = hash.keySet();
+        for(int i = 0; i<keySet.size(); i++)
+        {
+            K k = keySet.get(i);
+            if(k.getState().equals(state))
+            {
+                int population = (int)hash.get(k);
+                if(i==0)
+                {
+                     high = population;
+                     ret = k.getCity();
+                }
+                if(high<population)
+                {
+                    high = population;
+                    ret = k.getCity();
+                }
+            }
+        }
+        return ret + ": " + high;
+    }
 }
