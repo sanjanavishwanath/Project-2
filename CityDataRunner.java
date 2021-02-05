@@ -96,4 +96,21 @@ public class CityDataRunner
         }
         return ret + ": " + high;
     }
+    public static ArrayList<String> CityLetterPopulation(String letter)
+    {
+        ArrayList<String> ret = new ArrayList<String>();
+        Set<K> keySet = hash.keySet();
+        for(int i = 0; i<keySet.size(); i++)
+        {
+            K k = keySet.get(i);
+            if(k.getCity().substring(0,1).equals(letter))
+            {
+                int pop = (int)hash.get(k);
+                String x = k.getCity() + ", " + k.getState() + ": " + pop;
+                ret.add(x);
+            }
+        }
+        System.out.println(ret);
+        return ret;
+    }
 }
