@@ -58,4 +58,8 @@ public class ListSet<E> implements Set<E>
 		list.add(item);
 		return true;
 	}
+	public E get(int index)
+	{
+	    return list.get(index);
+	}
 }
