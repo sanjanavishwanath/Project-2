@@ -149,6 +149,7 @@ public class HashMap<K, V> implements Map<K, V>
         List<V> ret = new ArrayList<V>();
         for(List<Map.Node<K,V>> nodes: list)
         {
+            //hi
             for(Map.Node<K,V> node: nodes)
             {
                 ret.add(node.getValue());
