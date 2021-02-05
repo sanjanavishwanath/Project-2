@@ -1,66 +1,52 @@
 import java.util.Scanner;
 import java.io.*;
-
+import java.util.*;
 public class CityDataRunner
 {
+    private static HashMap hash;
     public static void main( String args[] ) 
     {
-        String data = "";
+        hash = new HashMap();
         try
         {
             // Open a Stream to a file you can read from.  The file name is "primes.dat".
-            File file = new File("CityData.dat");
+            File file = new File("CityData.txt");
             Scanner s = new Scanner(file);
             // Loop through each line of the file
             while(s.hasNextLine())
             {
                 // Read each line and append it to a String
                 String line = s.nextLine();
-                data += line + "\n";
+                K key = new K(line.split("\t")[0]);
+                hash.put(key, Integer.parseInt(line.split("\t")[1]));
             }
+            s.close();
+            //System.out.println(getCityPopulation("Austin", "TX"));
+            //System.out.println(getStatePopulation("TX"));
             // 
         }
         catch(IOException e)
         {
             e.printStackTrace();
         }
-        
-        try
+    }
+    public static int getCityPopulation(String city, String state)
+    {
+        K k = new K(city, state);
+        return (int)hash.get(k);
+    }
+    public static int getStatePopulation(String state)
+    {
+        int population = 0;
+        Set<K> keySet = hash.keySet();
+        for(int i = 0; i<keySet.size(); i++)
         {
-            // THIS IS WHERE YOU OPEN THE STREAM TO WRITE TO THE FILE
-            // When you write to the file, you will over-write what was there
-            // (i.e. make a new copy)
-            // In the FileWriter code you write, the second parameter is false, not true.
-            // Set it to false to overwrite
-            
-            // Open a Stream to a file that you can write to
-            // FileWriter code: 
-            FileWriter fw = new FileWriter("output.dat", false);
-            // BufferedWriter code:
-            BufferedWriter bw = new BufferedWriter(fw);
-            // PrintWriter code:
-            PrintWriter out = new PrintWriter(bw, true);
-            
-            // Create an array called numbers by splitting data with the .split() method
-            String[] numbers = data.split("\n");
-            // For each string in the array...
-            for(String n : numbers)
+            K k = keySet.get(i);
+            if(k.getState().equals(state))
             {
-                // Parse the string into an int
-                int i = Integer.parseInt(n);
-                // Create a Prime object and pass that int as a parameter into the Prime class
-                Prime p = new Prime(i);
-                // Use the .toString() method and write to the file
-                out.print(p.toString());
+                population += (int)hash.get(k);
             }
-            // Close the stream
-            out.close();
         }
-        catch(IOException e)
-        {
-            e.printStackTrace();
-        }
-        
-        
+        return population;
     }
 }
