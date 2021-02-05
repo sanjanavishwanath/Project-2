@@ -27,5 +27,6 @@ public interface Set<E>
 	 *		return true
 	 *	Otherwise, return false
 	 */
-	public boolean add(E item);	
+	public boolean add(E item);
+	public E get(int index);
 }
