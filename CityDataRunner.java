@@ -113,4 +113,111 @@ public class CityDataRunner
         System.out.println(ret);
         return ret;
     }
+        public static String getHighestPopulationInState (String state)
+    {
+        int highest = 0;
+        Set<K> keySet = hash.keySet();
+        for(int i = 0; i<keySet.size(); i++)
+        {
+            K k = keySet.get(i);
+            if(k.getState().equals(state))
+            {
+                String city = k.getCity();
+                if(getCityPopulation(city, state) > highest)
+                {
+                    highest = getCityPopulation(city, state);
+                }
+            }
+        }
+        return state + " Highest Population: " + highest;
+    }
+    public static String getLowestPopulationInState (String state)
+    {
+        Set<K> keySet = hash.keySet();
+        int lowest = 100000000;
+        for(int i = 0; i<keySet.size(); i++)
+        {
+            K k = keySet.get(i);
+            if(k.getState().equals(state))
+            {
+                String city = k.getCity();
+                if(getCityPopulation(city, state) < lowest)
+                {
+                    lowest = getCityPopulation(city, state);
+                }
+            }
+        }
+        return state + " Lowest Population: " + lowest;
+    }
+    public static String getMeanPopulationOfState (String state)
+    {
+        int sum = 0;
+        int count = 0;
+        Set<K> keySet = hash.keySet();
+        for(int i = 0; i<keySet.size(); i++)
+        {
+            K k = keySet.get(i);
+            if(k.getState().equals(state))
+            {
+                String city = k.getCity();
+                sum += getCityPopulation(city, state);
+                count++;
+            }
+        }
+        return state + " Mean: " + sum/count;
+    }
+    public static String getMedianPopulationOfState (String state)
+    {
+        //Sort list! Otherwise values won't be accurate
+        int median = 0;
+        Set<K> keySet = hash.keySet();
+        ArrayList<Integer> forward = new ArrayList<Integer>();
+        ArrayList<Integer> backward = new ArrayList<Integer>();
+        for(int i = 0; i<keySet.size(); i++)
+        {
+            K k = keySet.get(i);
+            if(k.getState().equals(state))
+            {
+                String city = k.getCity();
+                forward.add(0, getCityPopulation(city, state));
+                backward.add(getCityPopulation(city, state));
+            }
+        }
+        for(int i = 0; i<forward.size(); i++)
+        {
+            if(forward.get(i).equals(backward.get(i)))
+            {
+                median = forward.get(i);
+            }
+        }
+        for(int i = 0; i<forward.size()-1; i++)
+        {
+            int sum = forward.get(i)+forward.get(i+1);
+            int add = backward.get(i)+backward.get(i+1);
+            if(sum == add)
+            {
+                median = sum/2;
+            }
+        }
+        return state + " Median: " + median;
+    }
+    public static ArrayList<Integer> getRangeOfCityPopulationsInState (int max, int min, String state)
+    {
+        //Something is wrong, look back at this later
+        Set<K> keySet = hash.keySet();
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        for(int i = 0; i<keySet.size(); i++)
+        {
+            K k = keySet.get(i);
+            if(k.getState().equals(state))
+            {
+                String city = k.getCity();
+                if(getCityPopulation(city, state) < max && getCityPopulation(city, state) > min)
+                {
+                    list.add(getCityPopulation(city, state));
+                }
+            }
+        }
+        return list;
+    }
 }
