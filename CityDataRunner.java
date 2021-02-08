@@ -113,6 +113,38 @@ public class CityDataRunner
         System.out.println(ret);
         return ret;
     }
+    private static boolean alreadyAdded(ArrayList<String> states, String state)
+    {
+        for(String s: states)
+        {
+            String x = s.split(":")[0];
+            if(state.equals(x))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static ArrayList<String> StateLetterPopulation(String letter)
+    {
+        ArrayList<String> ret = new ArrayList<String>();
+        Set<K> keySet = hash.keySet();
+        for(int i = 0; i<keySet.size(); i++)
+        {
+            K k = keySet.get(i);
+            if(k.getState().substring(0,1).equals(letter))
+            {
+                if(!alreadyAdded(ret, k.getState()))
+                {
+                   int pop = getStatePopulation(k.getState());
+                    String x = k.getState() + ":" + pop;
+                    ret.add(x); 
+                }
+            }
+        }
+        System.out.println(ret);
+        return ret;
+    }
         public static String getHighestPopulationInState (String state)
     {
         int highest = 0;
