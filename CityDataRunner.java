@@ -233,7 +233,7 @@ public class CityDataRunner
         }
         return state + " Median: " + median;
     }
-    public static ArrayList<Integer> getRangeOfCityPopulationsInState (int max, int min, String state)
+    public static ArrayList<Integer> getRangeOfCityPopulations (int max, int min)
     {
         //Something is wrong, look back at this later
         Set<K> keySet = hash.keySet();
@@ -241,9 +241,9 @@ public class CityDataRunner
         for(int i = 0; i<keySet.size(); i++)
         {
             K k = keySet.get(i);
-            if(k.getState().equals(state))
             {
                 String city = k.getCity();
+                String state = k.getState();
                 if(getCityPopulation(city, state) < max && getCityPopulation(city, state) > min)
                 {
                     list.add(getCityPopulation(city, state));
