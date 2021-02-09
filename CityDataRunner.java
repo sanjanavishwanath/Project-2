@@ -39,7 +39,7 @@ public class CityDataRunner
             System.out.println("4. Get the highest city population in a state.");
             System.out.println("5. Get a list of populations based on the first letter of the place.");
             System.out.println("6. Get the highest/lowest/mean/median population of a city in a state.");
-            System.out.println("7. Get all the cities within a given range of populations in a state.");
+            System.out.println("7. Get all the cities within a given range of populations.");
             System.out.println("8. EXIT");
             Scanner input = new Scanner(System.in);
             System.out.println("Enter your option:");
@@ -113,15 +113,13 @@ public class CityDataRunner
             }
             else if(optionNumber==7)
             {
-                System.out.println("Enter the state abbreviation: "); 
-                String state = input.nextLine();
                 System.out.println("Enter the lower limit: "); 
                 String l = input.nextLine();
                 int low = Integer.parseInt(l);
                 System.out.println("Enter the upper limit: "); 
                 String h = input.nextLine();
                 int high = Integer.parseInt(h);
-                System.out.println(getRangeOfCityPopulationsInState(high,low,state));
+                System.out.println(getRangeOfCityPopulations(high,low));
             }
             else if(optionNumber==8)
             {
@@ -344,7 +342,7 @@ public class CityDataRunner
                 String state = k.getState();
                 if(getCityPopulation(city, state) < max && getCityPopulation(city, state) > min)
                 {
-                    list.add(new String(city + ": " + getCityPopulation(city, state))); 
+                    list.add(new String(city + ", " + state + ": " + getCityPopulation(city, state))); 
                 }
             }
         }
