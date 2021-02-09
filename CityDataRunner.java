@@ -30,6 +30,104 @@ public class CityDataRunner
             e.printStackTrace();
         }
     }
+    public static void userInput()
+        {
+            System.out.println("Which of the following would you like to do?");
+            System.out.println("1. Get the population of a city.");
+            System.out.println("2. Get the population of a state.");
+            System.out.println("3. Get the highest city population overall.");
+            System.out.println("4. Get the highest city population in a state.");
+            System.out.println("5. Get a list of populations based on the first letter of the place.");
+            System.out.println("6. Get the highest/lowest/mean/median population of a city in a state.");
+            System.out.println("7. Get all the cities within a given range of populations in a state.");
+            System.out.println("8. EXIT");
+            Scanner input = new Scanner(System.in);
+            System.out.println("Enter your option:");
+            String option = input.nextLine();
+            int optionNumber = Integer.parseInt(option);
+            if(optionNumber==1)
+            {
+                System.out.println("Enter city name: "); 
+                String city = input.nextLine();
+                System.out.println("Enter state abbreviation: "); 
+                String state = input.nextLine();
+                System.out.println(getCityPopulation(city, state));
+            }
+            else if(optionNumber==2)
+            {
+                System.out.println("Enter state abbreviation: "); 
+                String state = input.nextLine();
+                System.out.println(getStatePopulation(state));
+            }
+            else if(optionNumber==3)
+            {
+                System.out.println(getHighestCityPopulation());
+            }
+            else if(optionNumber==4)
+            {
+                System.out.println("Enter state abbreviation: "); 
+                String state = input.nextLine();
+                System.out.println(getHighestCityStatePopulation(state));
+            }
+            else if(optionNumber==5)
+            {
+                System.out.println("Would you like the city or state populations based on its first letter? Type 1 for city and 2 for state.");
+                String ans = input.nextLine();
+                int opt = Integer.parseInt(ans);
+                if(opt == 1)
+                {
+                    System.out.println("Enter the letter: "); 
+                    String city = input.nextLine();
+                    System.out.println(CityLetterPopulation(city));
+                }
+                else if(opt == 2)
+                {
+                    System.out.println("Enter the letter: "); 
+                    String city = input.nextLine();
+                    System.out.println(StateLetterPopulation(city));
+                }
+            }
+            else if(optionNumber==6)
+            {
+                System.out.println("Enter the state abbreviation: "); 
+                String state = input.nextLine();
+                System.out.println("Would you like the 1. highest, 2. lowest, 3. mean, 4. median population of a city in a state? Type the corresponding number."); 
+                String ans = input.nextLine();
+                int opt = Integer.parseInt(ans);
+                if(opt == 1)
+                {
+                    System.out.println(getHighestPopulationInState(state));
+                }
+                else if(opt == 2)
+                {
+                    System.out.println(getLowestPopulationInState(state));
+                }
+                else if(opt == 3)
+                {
+                    System.out.println(getMeanPopulationOfState(state));
+                }
+                else if(opt == 4)
+                {
+                    System.out.println(getMedianPopulationOfState(state));
+                }
+            }
+            else if(optionNumber==7)
+            {
+                System.out.println("Enter the state abbreviation: "); 
+                String state = input.nextLine();
+                System.out.println("Enter the lower limit: "); 
+                String l = input.nextLine();
+                int low = Integer.parseInt(l);
+                System.out.println("Enter the upper limit: "); 
+                String h = input.nextLine();
+                int high = Integer.parseInt(h);
+                System.out.println(getRangeOfCityPopulationsInState(high,low,state));
+            }
+            else if(optionNumber==8)
+            {
+                System.exit(0);
+            }
+        }
     public static int getCityPopulation(String city, String state)
     {
         K k = new K(city, state);
@@ -233,11 +331,11 @@ public class CityDataRunner
         }
         return state + " Median: " + median;
     }
-    public static ArrayList<Integer> getRangeOfCityPopulations (int max, int min)
+    public static ArrayList<String> getRangeOfCityPopulations (int max, int min)
     {
         //Something is wrong, look back at this later
         Set<K> keySet = hash.keySet();
-        ArrayList<Integer> list = new ArrayList<Integer>();
+        ArrayList<String> list = new ArrayList<String>();
         for(int i = 0; i<keySet.size(); i++)
         {
             K k = keySet.get(i);
@@ -246,7 +344,7 @@ public class CityDataRunner
                 String state = k.getState();
                 if(getCityPopulation(city, state) < max && getCityPopulation(city, state) > min)
                 {
-                    list.add(getCityPopulation(city, state));
+                    list.add(new String(city + ": " + getCityPopulation(city, state))); 
                 }
             }
         }
