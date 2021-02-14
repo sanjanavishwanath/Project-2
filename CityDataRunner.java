@@ -43,7 +43,8 @@ public class CityDataRunner
         System.out.println("5. Get a list of populations based on the first letter of the place.");
         System.out.println("6. Get the highest/lowest/mean population of a city in a state.");
         System.out.println("7. Get all the cities within a given range of populations.");
-        System.out.println("8. EXIT");
+        System.out.println("8. Play a game!");
+        System.out.println("9. EXIT");
         Scanner input = new Scanner(System.in);
         System.out.println("Enter your option:");
         String option = input.nextLine();
@@ -141,6 +142,10 @@ public class CityDataRunner
             System.out.println(ret);
         }
         else if(optionNumber==8)
+        {
+            game(input);
+        }
+        else if(optionNumber==9)
         {
             out.flush();
             out.close();
@@ -335,5 +340,28 @@ public class CityDataRunner
             }
         }
         return list;
+    }
+    public static void game(Scanner s)
+    {
+        int num = (int)(Math.random()*6001);
+        Set<K> keySet = hash.keySet();
+        String state = keySet.get(num).getState();
+        System.out.println("Guess the state (abbreviation) with a population of " +getStatePopulation(state) + ". You get five chances.");
+        int lives = 5;
+        while(lives>0)
+        {
+            String ans = s.nextLine();
+            if(ans.equals(state))
+            {
+                System.out.println("You win!");
+                return;
+            }
+            else
+            {
+                System.out.println("Try again.");
+                lives--;
+            }
+        }
+        System.out.println("You lost, the correct answer was: " + state);
     }
 }
