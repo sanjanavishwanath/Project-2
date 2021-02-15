@@ -41,7 +41,7 @@ public class CityDataRunner
         System.out.println("3. Get the highest city population overall.");
         System.out.println("4. Get the highest city population in a state.");
         System.out.println("5. Get a list of populations based on the first letter of the place.");
-        System.out.println("6. Get the highest/lowest/mean population of a city in a state.");
+        System.out.println("6. Get the highest/lowest/mean/median population of a city in a state.");
         System.out.println("7. Get all the cities within a given range of populations.");
         System.out.println("8. Play a game!");
         System.out.println("9. EXIT");
@@ -107,7 +107,7 @@ public class CityDataRunner
         {
             System.out.println("Enter the state abbreviation: "); 
             String state = input.nextLine();
-            System.out.println("Would you like the 1. highest, 2. lowest, 3. mean population of a city in a state? Type the corresponding number."); 
+            System.out.println("Would you like the 1. highest, 2. lowest, 3. mean, 4. median population of a city in a state? Type the corresponding number."); 
             String ans = input.nextLine();
             int opt = Integer.parseInt(ans);
             if(opt == 1)
@@ -125,6 +125,12 @@ public class CityDataRunner
             else if(opt == 3)
             {
                 String ret = "Mean population of " + state+ ": " + getMeanPopulationOfState(state);
+                out.println(ret + "\n");
+                System.out.println(ret);
+            }
+            else if(opt == 4)
+            {
+                String ret = "Median population of " + state+ ": " + getMedianPopulationOfState(state);
                 out.println(ret + "\n");
                 System.out.println(ret);
             }
@@ -320,7 +326,47 @@ public class CityDataRunner
                 count++;
             }
         }
-        return sum/count;
+        return state + " Mean: " + sum/count;;
+    }
+    public static String getMedianPopulationOfState (String state)
+    {
+        int median = 0;
+        Set<K> keySet = hash.keySet();
+        ArrayList<Integer> sorted = new ArrayList<Integer>();
+        for(int i = 0; i<keySet.size(); i++)
+        {
+            K k = keySet.get(i);
+            if(k.getState().equals(state))
+            {
+                String city = k.getCity();
+                sorted.add(getCityPopulation(city, state));
+            }
+        }
+        Collections.sort(sorted);
+        ArrayList<Integer> forward = new ArrayList<Integer>();
+        ArrayList<Integer> backward = new ArrayList<Integer>();
+        for(int i = 0; i<sorted.size(); i++)
+        {
+            forward.add(0, sorted.get(i));
+            backward.add(sorted.get(i));
+        }
+        for(int i = 0; i<forward.size(); i++)
+        {
+            if(forward.get(i).equals(backward.get(i)))
+            {
+                median = forward.get(i);
+            }
+        }
+        for(int i = 0; i<forward.size()-1; i++)
+        {
+            int sum = forward.get(i)+forward.get(i+1);
+            int add = backward.get(i)+backward.get(i+1);
+            if(sum == add)
+            {
+                median = sum/2;
+            }
+        }
+        return state + " Median: " + median;
     }
     public static ArrayList<String> getRangeOfCityPopulations (int max, int min)
     {
