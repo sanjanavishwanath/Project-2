@@ -392,7 +392,18 @@ public class CityDataRunner
         int num = (int)(Math.random()*6001);
         Set<K> keySet = hash.keySet();
         String state = keySet.get(num).getState();
+        String[] c = new String[5];
         System.out.println("Guess the state (abbreviation) with a population of " +getStatePopulation(state) + ". You get five chances.");
+        int i = (int)(Math.random()*5);
+        c[i] = state;
+        for(int j = 0; j<5; j++)
+        {
+            int n = (int)(Math.random()*6001);
+            String st = keySet.get(n).getState();
+            if(st.equals(state)){j--;}
+            else if(j!=i) {c[j] = st;}
+        }
+        System.out.println("Your options are " + c[0] + "," + c[1] + "," +c[2] + "," +c[3] + "," +c[4] + ".");
         int lives = 5;
         while(lives>0)
         {
