@@ -328,7 +328,7 @@ public class CityDataRunner
         }
         return sum/count;
     }
-    public static String getMedianPopulationOfState (String state)
+    public static int getMedianPopulationOfState (String state)
     {
         int median = 0;
         Set<K> keySet = hash.keySet();
@@ -366,7 +366,7 @@ public class CityDataRunner
                 median = sum/2;
             }
         }
-        return state + " Median: " + median;
+        return median;
     }
     public static ArrayList<String> getRangeOfCityPopulations (int max, int min)
     {
