@@ -326,7 +326,7 @@ public class CityDataRunner
                 count++;
             }
         }
-        return state + " Mean: " + sum/count;;
+        return sum/count;;
     }
     public static String getMedianPopulationOfState (String state)
     {
